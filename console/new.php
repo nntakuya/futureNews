@@ -1,3 +1,6 @@
+<!-- オーナー権を確認するために、ユーザーテーブルにオーナーカラムを作成	 -->
+
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -21,12 +24,7 @@
 		<div class="inputForm">  
 			パスワード：		
 			<input type="password" name="password">
-		</div>
-
-		<div class="inputForm">  
-			画像：		
-			<input id="imgFile" type="file">
-		</div>				
+		</div>		
 
 		<!-- 余力があれば、パスワード確認欄を作成 -->
 

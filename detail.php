@@ -37,8 +37,6 @@
 	<div class="contnets">
 
 	
-
-
 	</div>
 
 	<div id="footer">
