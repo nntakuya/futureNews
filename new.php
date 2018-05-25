@@ -5,7 +5,12 @@
 	<title>ログイン</title>
 </head>
 <body>
-	<form action="index_submit" method="get">
+	<form action="index_submit" method="post">
+		<!-- ユーザー名 入力欄	-->
+		<div class="inputForm">  
+			ユーザー名：
+			<input type="text" name="name">
+		</div>	
 		<!-- メールアドレス 入力欄	-->
 		<div class="inputForm">  
 			メールアドレス：
@@ -16,11 +21,13 @@
 		<div class="inputForm">  
 			パスワード：		
 			<input type="password" name="password">
-		</div>	
+		</div>		
 
-		<input type="submit" value="ログイン">
+		<!-- 余力があれば、パスワード確認欄を作成 -->
+
+		<input type="submit" value="新規登録">
 	</form>
 
-	<a href="new.php">新規登録</a>
+	<a href="index	.php">戻る</a>
 </body>
 </html>
