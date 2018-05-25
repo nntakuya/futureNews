@@ -1,0 +1,215 @@
+body,html{
+	margin: 0;
+	height: auto;
+}
+
+
+/*ヘッダーデザイン*/
+.header {
+	height: 50px;
+	box-shadow: 0 2px 4px -1px rgba(0,0,0,0.27);
+}
+
+/* WFC: */
+#headTitle{
+	font-family: LucidaGrande;
+	font-size: 30px;
+	color: #000000;
+	margin:0;
+	padding-top:7.5px;
+	text-align: center;
+	letter-spacing: 5.23px;
+	text-align: center;
+	width: 100%;
+}
+
+#nav-link{
+	position: absolute;
+	right: 0;
+	top: 16px;
+	bottom: 0;
+	list-style: none;
+	height: 18px;
+	padding: 0;
+	margin:0;
+	width: 220px;
+
+}
+
+#nav-link .link{
+	font-family: Athelas;
+	display: inline;
+	color: #000000;
+	/*margin-top: 16px;*/
+	margin-right: 10px;
+	/*margin: 16px 10px 0 0;*/
+}
+
+ul li #aboutMe{
+	
+}
+ul li #rec{
+	
+}
+
+
+
+
+
+/*コンテンツのタイトル*/
+.contentTitle {
+	text-align: center;
+	font-size: 30px;
+	font-family: LucidaGrande;
+	letter-spacing: 5.23px;
+}
+
+/*コンテンツの中身*/
+.contnets {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: auto;
+}
+
+
+/*以下のwidthの最大値を超えた場合の対策が分からない*/
+#top_image{
+	height: 500px;
+	width: 100%;
+	max-width: 1920px;
+	background-image: url(image/sunabe4.png);
+	background-position: bottom;	
+}
+
+/* Worth from Crazy: */
+#siteTitle{
+	margin:0;
+	padding-top:  211.5px;
+	font-family: Garamond;
+	font-size: 50px;
+	color: #FFFFFF;
+	text-align: center;
+	line-height: 77px;
+}
+
+
+/*My product list*/
+.contnets #contents_one{
+	margin: 0;
+	width: 100%;
+	height: 400px;
+}
+
+.contnets #contents_one #productImages{
+	margin-right:auto;
+	margin-left:auto;
+	padding: 0;
+	width: 1084px;
+	height: 200px;
+}
+
+.productImage{
+	margin-right: 10px;
+	padding: 0;
+	width: 350px;
+	height: 200px;	
+	display: inline-block;
+	box-shadow: 1px 2px 4px 0 rgba(0,0,0,0.50);
+}
+
+.productImage:last-of-type{
+  margin-right: 0;
+}
+/*なぜmarginでバランスをとっているのかが分からない	*/
+.productImage #iosIcon{
+	width: 250px;
+	margin:35px;
+	display: inline;
+}
+
+.productImage #iosTitle{
+	width: 150px;
+	margin:25px;
+	display: inline;
+}
+
+/*content_oneとcontent_twoの間のボーダー	*/
+#border {
+	border: 0.5px solid gray;
+	width: 95%;
+	margin-right: 2.5%;
+	margin-left: 2.5%;
+}
+
+
+
+
+/*instagramリスト*/
+.contnets #contents_two{
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 400px;
+}
+
+
+.contnets #contents_two #instaLists{
+	margin-right: auto;
+	margin-left:auto;
+	padding: 0;
+	width: 634px;
+	height: 202px;
+}
+
+
+.instaList{
+	margin-right: 10px;
+	padding: 0;
+	width: 200px;
+	height: 200px;	
+	display: inline-block;
+
+}
+
+.instaList .instaImg{
+	width: 200px;
+	height: 200px;
+}
+
+.instaList:last-of-type{
+	margin-right: 0;
+}
+
+
+
+/*フッター*/
+/*フッターの高さ等の設定は "footerFixed.js"で定義している*/
+#footer{
+	background-color: #1E1E1E;
+	margin: 0;
+	padding: 0;
+	height: 50px;
+}
+
+#snsLink {
+	width: 90px;
+	align-items: center;
+	float: right;
+
+}
+#copyright{
+	color: white;
+	text-align: center;
+	padding-top: 16px;
+}
+
+#snsLink #fb{
+	width: 30px;
+}
+
+#snsLink #twitter{
+	width: 30px;
+}
+
+
