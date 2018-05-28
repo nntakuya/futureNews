@@ -8,7 +8,7 @@ class Model_User
 	private $password = "";
 	private $image = "";
 	private $owner = 0;
-	private $error = [];
+	private $errors = [];
 	
 
 	
@@ -27,10 +27,12 @@ class Model_User
 		$inputImagePath =$this->setImagePath($image);
 		$inputOwener =$this->setOwner($owner);
 
+
 		//各項目において、エラーがない場合、データベースに反映させる
-		// if (condition) {
-		// 	# code...
-		// }
+		//TODO:ここのエラーの出し方は詰める
+		if (isset($errors)) {
+			return $errors;
+		}
 
 		$sql = 'INSERT INTO `users` SET `name`=?,
 										  `email`=?, 
@@ -44,7 +46,13 @@ class Model_User
 		
 
 		$stmt = $dbh->prepare($sql);
-		$result = $stmt->execute($data);
+		$stmt->execute($data);
+
+		//下記の処理はもう一度考える
+		$result =  $this->find_by($inputEmail,$inputPassword);//インサート後にログイン処理
+
+		return $result;
+
 	}
 
 
@@ -76,6 +84,7 @@ class Model_User
         	return $record;
         }else{
         	$errors['login'] = 'NG';//エラーの場合の対処を考える
+        	return $errors;
         }
 	}
 

@@ -2,8 +2,8 @@
 <html>
 <head>
 	<title>Takuya's site</title>
-	<link rel="stylesheet" type="text/css" href="assets/Custom.css">
-	<script type="text/javascript" src="assets/js/footerFixed.js"></script>
+	<link rel="stylesheet" type="text/css" href="../assets/Custom.css">
+	<script type="text/javascript" src="../assets/js/footerFixed.js"></script>
 	
 </head>
 <body>

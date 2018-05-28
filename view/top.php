@@ -2,8 +2,8 @@
 <html>
 <head>
 	<title>Takuya's site</title>
-	<link rel="stylesheet" type="text/css" href="assets/Custom.css">
-	<script type="text/javascript" src="assets/js/footerFixed.js"></script>
+	<link rel="stylesheet" type="text/css" href="../assets/Custom.css">
+	<script type="text/javascript" src="../assets/js/footerFixed.js"></script>
 	
 </head>
 <body>
@@ -33,7 +33,7 @@
 			<div id="productImages">
 				<!-- FirstContent -->
 				<div class="productImage">
-					<img id="iosIcon" src="assets/image/iosApp1.png" alt="アプリイメージ">
+					<img id="iosIcon" src="../assets/image/iosApp1.png" alt="アプリイメージ">
 				</div>
 				<!-- SecondContent -->
 				<div class="productImage">

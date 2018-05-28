@@ -1,4 +1,5 @@
 <?php 
+session_start();
 require("../model/user.php");
 
 // 初期値のセット
@@ -29,10 +30,6 @@ if (isset($_POST)) {
 
 
 
-
-
-
-
 //ユーザーの新規登録
 function createUser(){
 	$user = new Model_User;
@@ -45,11 +42,17 @@ function createUser(){
 	$result = $user->create($name,$email,$password,$image,$owner);
 
 
+	error_log(print_r($result,true),"3","../../../../../logs/error_log");
 	//(課題）errorの数が0じゃない場合にするか？
-	// if ($result == "error") {
-	// 	//new.phpへリダイレクト
-	// 		//フォームの初期値を入力状態へ
-	// }
+	//TODO:下記のErrorの場合の処理は、詰める
+	if ($result == "error") {
+		//new.phpへリダイレクト
+		//フォームの初期値を入力状態へ
+		header('Location: ../view/new.php');
+	}else{
+		$_SESSION["loginUser"] = $result;
+		header('Location: ../view/top.php');
+	}
 	//そのままtop.phpへリダイレクト
 }
 	
@@ -59,10 +62,22 @@ function loginUser(){
 	$email = htmlspecialchars($_POST["email"]);
 	$password = htmlspecialchars($_POST["password"]);
 
-	$loginUser = $user->find_by($email,$password);//email,passwordからログインユーザーを認証
+	$result = $user->find_by($email,$password);//email,passwordからログインユーザーを認証
 	// error_log(print_r($loginUser,true),"3","../../../../../logs/error_log");
 
 
+	//以下の処理は微妙
+	if ($result['login'] == 'NG') {
+		//ログイン画面に、入力された値を保持したままリダイレクト
+		header('Location: ../view/index.php');
+		error_log(print_r($result['login'],true),"3","../../../../../logs/error_log");
+	}else{
+		//取得したユーザー情報をSessionに保存する
+		//TODO:余力があれば、トークンを発行して、別通信でもコンフリクトを起こさないようにする。
+		$_SESSION["loginUser"] = $result;
+		error_log(print_r("me",true),"3","../../../../../logs/error_log");
+		header('Location: ../view/top.php');
+	}
 }
 
 
