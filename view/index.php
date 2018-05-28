@@ -6,7 +6,7 @@
 </head>
 
 <body>
-	<form action="index_submit" method="get">
+	<form action="../controller/user.php" method="get">
 		<!-- メールアドレス 入力欄	-->
 		<div class="inputForm">  
 			メールアドレス：

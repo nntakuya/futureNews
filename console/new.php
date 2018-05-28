@@ -25,6 +25,8 @@
 			パスワード：		
 			<input type="password" name="password">
 		</div>		
+		<!-- オーナー権を1にする -->
+		<input type="hidden" name="owner" value="1">
 
 		<!-- 余力があれば、パスワード確認欄を作成 -->
 
