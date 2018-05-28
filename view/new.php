@@ -33,6 +33,9 @@
 		<!-- オーナー権をなしにする -->
 		<input type="hidden" name="owner" value="0">
 
+		<!-- Sign Up -->
+		<input type="hidden" name="SignUpOrSignIn" value="SignUp">
+
 		<input type="submit" value="新規登録">
 	</form>
 

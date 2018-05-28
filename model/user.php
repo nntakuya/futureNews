@@ -3,14 +3,6 @@
 
 class Model_User 
 {
-	
-
-	//TODO
-	//プロパティのセット
-	//1.name 2.email 3.password 4.image 5.owner
-
-
-
 	private $name = "";
 	private $email = "";
 	private $password = "";
@@ -19,17 +11,10 @@ class Model_User
 	private $error = [];
 	
 
-
-
-	//ログインする際に必要な情報
-	//1.email 2.password
-
-	//新規登録する際に必要な情報
-	// name email password image owner 
-
 	
 	//ユーザー登録
 	//エラーが出た場合、その都度、セッターのファンクションで、$error配列にエラー項目を追加していく
+	//TODO:アカウント作成時、既に存在するアカウントの場合をエラーにする
 	function create($name,$email,$password,$image,$owner){
 		require("dbconnect.php");
 
@@ -37,14 +22,9 @@ class Model_User
 		//以下のメソッドを作る
 
 		$inputName = $this->setName($name);
-
 		$inputEmail =$this->setEmail($email);
-
 		$inputPassword =$this->setPassword($password);
-
 		$inputImagePath =$this->setImagePath($image);
-
-
 		$inputOwener =$this->setOwner($owner);
 
 		//各項目において、エラーがない場合、データベースに反映させる
@@ -65,8 +45,6 @@ class Model_User
 
 		$stmt = $dbh->prepare($sql);
 		$result = $stmt->execute($data);
-
-
 	}
 
 
@@ -76,6 +54,30 @@ class Model_User
 	}
 
 
+	//ログイン機能
+	function find_by($email,$password){
+		require("dbconnect.php");
+
+		$sql = 'SELECT * FROM `users` WHERE `email` = ? AND `password` = ?';
+
+		// error_log(print_r("success",true),"3","../../../../../logs/error_log");//デバッグ
+        // ?マークを代入する
+        $data = array($email,$password);
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute($data);
+
+        // セレクト文を実行した結果を取得する。
+        $record = $stmt->fetch(PDO::FETCH_ASSOC);
+        // 全件取得させる場合はループさせて、配列に入れる
+        // セレクトした内容の一番上(エクセルの表の一番上のみ)だけ取得して存在するかどうかチェックすれば、ログイン判定可能
+
+        if ($record) {
+        	error_log(print_r($record,true),"3","../../../../../logs/error_log");//デバッグ
+        	return $record;
+        }else{
+        	$errors['login'] = 'NG';//エラーの場合の対処を考える
+        }
+	}
 
 
 

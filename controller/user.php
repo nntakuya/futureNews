@@ -5,38 +5,44 @@ require("../model/user.php");
 $name = "";
 $email = 
 $password = "";
-//imageは保留
 $image = "sampleImage";
 $owner = 0;
 
-//userインスタントの作成
+
+// ==========================
+//	　　 ログイン or 新規登録
+// ==========================
+if (isset($_POST)) {
+	//ユーザーの ログイン or 新規登録
+	if ($_POST["SignUpOrSignIn"] == "SignIn") 
+	{
+		error_log(print_r("SignIn",true),"3","../../../../../logs/error_log");
+		loginUser();
+
+	}elseif ($_POST["SignUpOrSignIn"] == "SignUp") 
+	{
+		error_log(print_r("SignUp",true),"3","../../../../../logs/error_log");
+		createUser();
+	}
+}
 
 
 
-//ここで条件分岐
-//new.phpとlogin.phpのいずれかで処理を変える
-
-
-createUser();
 
 
 
 
+
+//ユーザーの新規登録
 function createUser(){
 	$user = new Model_User;
 	$name = htmlspecialchars($_POST["name"]);
 	$email = htmlspecialchars($_POST["email"]);
 	$password = htmlspecialchars($_POST["password"]);
-
 	$image = htmlspecialchars($_POST["image"]);
-	$owner = 0;//debug
-	// $owner = htmlspecialchars($_POST["owner"]);
-
-	// error_log(print_r($image,true),"3","../../../../../logs/error_log");
+	$owner = htmlspecialchars($_POST["owner"]);
 
 	$result = $user->create($name,$email,$password,$image,$owner);
-
-
 
 
 	//(課題）errorの数が0じゃない場合にするか？
@@ -45,31 +51,19 @@ function createUser(){
 	// 		//フォームの初期値を入力状態へ
 	// }
 	//そのままtop.phpへリダイレクト
-
 }
 	
+//ユーザーのログイン
+function loginUser(){
+	$user = new Model_User; //ユーザーモデルインスタンスを作成
+	$email = htmlspecialchars($_POST["email"]);
+	$password = htmlspecialchars($_POST["password"]);
+
+	$loginUser = $user->find_by($email,$password);//email,passwordからログインユーザーを認証
+	// error_log(print_r($loginUser,true),"3","../../../../../logs/error_log");
 
 
-
-
-
-
-// if (condition) {
-// 	// フォームからの値を取得
-// 	$name = htmlspecialchars($_POST["username"]);
-// 	$email = htmlspecialchars($_POST["email"]);
-// 	$password = htmlspecialchars($_POST["password"]);
-// 	$image = "sampleImage";//imageは保留
-// 	$owner = htmlspecialchars($_POST["owner"]);
-
-// 	$user->createUser();
-
-	
-
-// }elseif(){
-// 	$user->loginUser();
-// }
-
+}
 
 
 
