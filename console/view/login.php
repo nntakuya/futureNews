@@ -6,7 +6,7 @@
 </head>
 
 <body>
-	<form action="index_submit" method="get">
+	<form action="../controller/user.php" method="post">
 		<!-- メールアドレス 入力欄	-->
 		<div class="inputForm">  
 			メールアドレス：
@@ -18,9 +18,13 @@
 			パスワード：		
 			<input type="password" name="password">
 		</div>	
+		
+		<!-- Sign In -->
+		<input type="hidden" name="SignUpOrSignIn" value="SignIn">
 
 		<input type="submit" value="ログイン">
 	</form>
+
 
 	<a href="new.php">新規登録</a>
 </body>

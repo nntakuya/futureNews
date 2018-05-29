@@ -8,7 +8,7 @@
 	<title>ログイン</title>
 </head>
 <body>
-	<form action="index_submit" method="post">
+	<form action="../controller/user.php" method="post">
 		<!-- ユーザー名 入力欄	-->
 		<div class="inputForm">  
 			ユーザー名：
@@ -24,15 +24,23 @@
 		<div class="inputForm">  
 			パスワード：		
 			<input type="password" name="password">
-		</div>		
-		<!-- オーナー権を1にする -->
-		<input type="hidden" name="owner" value="1">
+		</div>
+
+		<div class="inputForm">  
+			画像：		
+			<input id="imgFile" type="file" name="image">
+		</div>				
 
 		<!-- 余力があれば、パスワード確認欄を作成 -->
+		
+		<!-- オーナー権をアリにする -->
+		<input type="hidden" name="owner" value="1">
+
+		<!-- Sign Up -->
+		<input type="hidden" name="SignUpOrSignIn" value="SignUp">
 
 		<input type="submit" value="新規登録">
 	</form>
-
-	<a href="index	.php">戻る</a>
+	<a href="login.php">戻る</a>
 </body>
 </html>
