@@ -5,7 +5,7 @@
 	<title>ログイン</title>
 </head>
 <body>
-	<form action="../../model/article.php" method="post">
+	<form action="../controller/article.php" method="post">
 		<!-- タイトル 入力欄	-->
 		<div class="inputForm">  
 			タイトル：

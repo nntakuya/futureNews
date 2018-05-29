@@ -3,9 +3,6 @@
  * 
  */
 
-//todo
-//データベースへ接続など共通で必要なコードをまとめる
-
 class Model_Article 
 {
 	private $title = "";
@@ -36,7 +33,7 @@ class Model_Article
 			return $errors;
 		}
 
-		$sql = 'INSERT INTO `users` SET `title`=?,
+		$sql = 'INSERT INTO `articles` SET `title`=?,
 										  `content`=?, 
 								          `youtube_url`=?, 
 								          `created`=NOW()';

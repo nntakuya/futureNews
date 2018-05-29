@@ -16,20 +16,20 @@ if (isset($_POST)) {
 	if ($_POST["manage"] == "upload") 
 	{
 		error_log(print_r("upload",true),"3","../../../../../logs/error_log");
-		loginUser();
+		create();
 
-	}elseif ($_POST["SignUpOrSignIn"] == "SignUp") 
+	}elseif ($_POST["manage"] == "showAll") 
 	{
 		error_log(print_r("SignUp",true),"3","../../../../../logs/error_log");
-		createUser();
+		// createUser();
 	}
 }
 
 
 
 
-//ユーザーの新規登録
-function createAritcle(){
+//記事の投稿
+function create(){
 	$article = new Model_Article ;
 	$title = htmlspecialchars($_POST["title"]);
 	$content = htmlspecialchars($_POST["content"]);
@@ -37,27 +37,27 @@ function createAritcle(){
 
 	$result = $article->create($title,$content,$youtubeLink);
 
-
-	error_log(print_r($result,true),"3","../../../../../logs/error_log");
 	//(課題）errorの数が0じゃない場合にするか？
 	//TODO:下記のErrorの場合の処理は、詰める
-	if ($result == "error") {
-		//new.phpへリダイレクト
-		//フォームの初期値を入力状態へ
-		$_SESSION["result"] = "投稿できませんでした。";
-		header('Location: ../view/management.php');
-		exit;
-	}else{
-		//TODO:投稿完了のお知らせをsessionでする
-		$_SESSION["result"] = "投稿しました。";
-		header('Location: ../view/management.php');
-		exit;
-	}
+	// if ($result == "error") {
+	// 	//new.phpへリダイレクト
+	// 	//フォームの初期値を入力状態へ
+	// 	$_SESSION["result"] = "投稿できませんでした。";
+	// 	header('Location: ../view/management.php');
+	// 	exit;
+	// }else{
+	// 	//TODO:投稿完了のお知らせをsessionでする
+	// 	$_SESSION["result"] = "投稿しました。";
+	// 	header('Location: ../view/management.php');
+	// 	exit;
+	// }
 	//そのままtop.phpへリダイレクト
+	header('Location: ../view/management.php');
+	exit;
 }
 	
-//ユーザーのログイン
-function showAllArticle(){
+//記事全件取得
+function showAll(){
 	
 	//2.全件取得し、Sessionに保存
 	//3.viewで全件表示
