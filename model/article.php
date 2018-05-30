@@ -8,17 +8,9 @@ class Model_Article
 	private $title = "";
 	private $content = "";
 	private $youtubeLink = "";
-	private $error = [];
-	
+	private $articles = [];
 
 
-	//ログインする際に必要な情報
-	//1.email 2.password
-
-	//新規登録する際に必要な情報
-	// name email password image owner 
-
-	
 	//記事登録
 	//エラーが出た場合、その都度、セッターのファンクションで、$error配列にエラー項目を追加していく
 	function create($title,$content,$youtubeLink){
@@ -42,34 +34,46 @@ class Model_Article
 		
 
 		$stmt = $dbh->prepare($sql);
-		$stmt->execute($data);	
+		$stmt->execute($data);
 	}
 
 
 	//全記事取得
-	function find_all($id){
+	function find_all(){
 		require("dbconnect.php");
+		//初期化
+		$articles = [];
 
+		//SQLクエリを発行
 		$sql = 'SELECT * FROM `articles`';
-
-		// error_log(print_r("success",true),"3","../../../../../logs/error_log");//デバッグ
         $stmt = $dbh->prepare($sql);
         $stmt->execute();
-
-        // セレクト文を実行した結果を取得する。
-        $record = $stmt->fetch(PDO::FETCH_ASSOC);
-        // 全件取得させる場合はループさせて、配列に入れる
-        // セレクトした内容の一番上(エクセルの表の一番上のみ)だけ取得して存在するかどうかチェックすれば、ログイン判定可能
-
-        if ($record) {
-        	$articles[] = $record;
-        	error_log(print_r($record,true),"3","../../../../../logs/error_log");//デバッグ
-        	return $articles;
-        }else{
-        	$errors['login'] = 'NG';//エラーの場合の対処を考える
-        	return $errors;
-        }
+        
+        //記事データを取得
+        while(true){
+			$record = $stmt->fetch(PDO::FETCH_ASSOC);
+			if(!$record){
+				break;
+			}
+			$articles[] = $record;
+		}
+		return $articles;
 	}
+
+	function delete($id){
+		//datebaseへ接続する
+		require("dbconnect.php");
+		//デリートクエリを実行
+		$sql = 'DELETE FROM `articles` WHERE `id`=?';
+		$data = [$id];
+		$stmt = $dbh->prepare($sql);
+		$stmt->execute($data);
+	}
+
+
+
+
+
 
 
 	//ログイン機能

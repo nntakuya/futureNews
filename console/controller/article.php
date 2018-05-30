@@ -7,21 +7,29 @@ $title = "";
 $content = 
 $youtube = "";
 
+//Model_Articleの呼び出しに失敗した場合に、エラーを下記の変数に格納する
+$result = [
+	'articlesData'=>"",
+	"result"=>""
+];
+$errors=[
+		"inputData"=>"notFind"
+];
+
 
 // ==========================
 //	　　 記事の投稿
 // ==========================
-if (isset($_POST)) {
+if (!empty($_POST)) {
 	//ユーザーの ログイン or 新規登録
 	if ($_POST["manage"] == "upload") 
 	{
-		error_log(print_r("upload",true),"3","../../../../../logs/error_log");
 		create();
 
-	}elseif ($_POST["manage"] == "showAll") 
+	}elseif ($_POST["manage"] == "delete") 
 	{
-		error_log(print_r("SignUp",true),"3","../../../../../logs/error_log");
-		// createUser();
+		error_log(print_r($_POST,true),"3","../../../../../logs/error_log");
+		delete($_POST["articleId"]);
 	}
 }
 
@@ -59,28 +67,21 @@ function create(){
 //記事全件取得
 function showAll(){
 	
-	//2.全件取得し、Sessionに保存
-	//3.viewで全件表示
-
 
 	//1.Articleモデルをインスタンス化
 	$article = new Model_Article ; //Articleモデルインスタンスを作成
-	$_SESSION["article"] = $article->showAllArticle(); //2.全件取得し、Sessionに保存
-	 
-	
-	//以下の処理は微妙
-	if ($result['login'] == 'NG') {
-		//ログイン画面に、入力された値を保持したままリダイレクト
-		header('Location: ../view/index.php');
-		error_log(print_r($result['login'],true),"3","../../../../../logs/error_log");
-	}else{
-		//取得したユーザー情報をSessionに保存する
-		//TODO:余力があれば、トークンを発行して、別通信でもコンフリクトを起こさないようにする。
-		$_SESSION["loginUser"] = $result;
-		error_log(print_r("me",true),"3","../../../../../logs/error_log");
-		header('Location: ../view/top.php');
-	}
+	$result = $article->find_all();
+
+	return $result; 
 }
 
 
+function delete($id){
+	$article = new Model_Article ; //Articleモデルインスタンスを作成
+	error_log(print_r($id,true),"3","../../../../../logs/error_log");
+	$article->delete($id);
+	
+
+
+}
 
