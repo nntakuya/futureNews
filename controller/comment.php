@@ -1,15 +1,13 @@
 <?php 
 session_start();
-require("../../model/article.php");
+require("../model/comment.php");
 
 // 初期値
-$title = "";
-$content = 
-$youtube = "";
+$comment = "";
 
 //Model_Articleの呼び出しに失敗した場合に、エラーを下記の変数に格納する
 $result = [
-	'articlesData'=>"",
+	'commentsData'=>"",
 	"result"=>""
 ];
 $errors=[
@@ -17,12 +15,13 @@ $errors=[
 ];
 
 
+
 // ==========================
 //	　　 Route設定
 // ==========================
 if (!empty($_POST)) {
-	//ユーザーの ログイン or 新規登録
-	if ($_POST["manage"] == "upload") 
+	//コメントの投稿
+	if ($_POST["manage"] == "postCom") 
 	{
 		create();
 
@@ -38,12 +37,12 @@ if (!empty($_POST)) {
 
 //記事の投稿
 function create(){
-	$article = new Model_Article ;
-	$title = htmlspecialchars($_POST["title"]);
-	$content = htmlspecialchars($_POST["content"]);
-	$youtubeLink = htmlspecialchars($_POST["youtube"]);
+	$comment = new Model_Comment ;
+	$content = htmlspecialchars($_POST["comment"]);
+	$articleID = htmlspecialchars($_POST["articleID"]);
+	$userID = htmlspecialchars($_POST["userID"]);
 
-	$result = $article->create($title,$content,$youtubeLink);
+	$result = $comment->create($content,$articleID,$userID);
 
 	//(課題）errorの数が0じゃない場合にするか？
 	//TODO:下記のErrorの場合の処理は、詰める
@@ -60,26 +59,33 @@ function create(){
 	// 	exit;
 	// }
 	//そのままtop.phpへリダイレクト
-	header('Location: ../view/management.php');
+	header('Location: ../view/detail.php?id='.$articleID);
 	exit;
 }
 	
 //記事全件取得
 function showAll(){
-	
-
 	//1.Articleモデルをインスタンス化
-	$article = new Model_Article ; //Articleモデルインスタンスを作成
-	$result = $article->find_all();
+	$comment = new Model_Comment ; //commentモデルインスタンスを作成
+	$result = $comment->find_all();
 
 	return $result; 
 }
 
+function show($id){
+	$comment = new Model_Comment ; //commentモデルインスタンスを作成
+	$result = $comment->find_by($id);
+	error_log(print_r("test",true),"3","../../../../../logs/error_log");
+	error_log(print_r($result,true),"3","../../../../../logs/error_log");
+	return $result; 
+}
+
+
 
 function delete($id){
-	$article = new Model_Article ; //Articleモデルインスタンスを作成
-	error_log(print_r($id,true),"3","../../../../../logs/error_log");
-	$article->delete($id);
+	$comment = new Model_Comment ; //commentモデルインスタンスを作成
+	// error_log(print_r($id,true),"3","../../../../../logs/error_log");
+	$comment->delete($id);
 	
 
 

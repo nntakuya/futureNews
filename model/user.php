@@ -8,7 +8,9 @@ class Model_User
 	private $password = "";
 	private $image = "";
 	private $owner = 0;
-	private $errors = [];
+	private $errors = [
+		"login"=>"",
+	];
 	
 
 	
@@ -65,27 +67,27 @@ class Model_User
 	//ログイン機能
 	function find_by($email,$password){
 		require("dbconnect.php");
+		$status = [
+			"loginUser"=>[],
+			"error"=>""
+		];
+	
 
+		//Emailとパスワードに合致するユーザーをデータベースから取得する
 		$sql = 'SELECT * FROM `users` WHERE `email` = ? AND `password` = ?';
-
-		// error_log(print_r("success",true),"3","../../../../../logs/error_log");//デバッグ
-        // ?マークを代入する
         $data = array($email,$password);
         $stmt = $dbh->prepare($sql);
         $stmt->execute($data);
+        $status["loginUser"] = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // セレクト文を実行した結果を取得する。
-        $record = $stmt->fetch(PDO::FETCH_ASSOC);
-        // 全件取得させる場合はループさせて、配列に入れる
-        // セレクトした内容の一番上(エクセルの表の一番上のみ)だけ取得して存在するかどうかチェックすれば、ログイン判定可能
-
-        if ($record) {
-        	error_log(print_r($record,true),"3","../../../../../logs/error_log");//デバッグ
-        	return $record;
-        }else{
-        	$errors['login'] = 'NG';//エラーの場合の対処を考える
-        	return $errors;
+        //取得できなかった場合、エラーフラグをセット
+        if (!$status["loginUser"]) {
+        	$status["error"] = 'notFind';
         }
+
+        // error_log(print_r($status,true),"3","../../../../../logs/error_log");//デバッグ
+
+        return $status;
 	}
 
 

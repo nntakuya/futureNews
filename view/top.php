@@ -1,3 +1,6 @@
+<?php require("../controller/article.php"); ?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,34 +23,36 @@
 	</div>
 
 	<div class="contnets">
-
-		<!-- 画像部分 -->
-		<!-- <div id="top_image">
-			<p id="siteTitle">Worth from Crazy</p>
-		</div> -->
-
 		<!-- my product -->
 		<div id="contents_one">
 			<p class="contentTitle">TOPICS</p>
-			<!-- <img class="contentTitle" src="assets/image/My Product.png" alt=""> -->
 			<div id="productImages">
-				<!-- FirstContent -->
-				<div class="productImage">
-					<img id="iosIcon" src="../assets/image/iosApp1.png" alt="アプリイメージ">
-				</div>
-				<!-- SecondContent -->
-				<div class="productImage">
-					
-				</div>
-				<!-- ThirdContent -->
-				<div class="productImage">
-					
+
+				<!-- 記事データを全件取得 -->
+				<?php $articles = showAll(); ?>
+				<div id="list">
+					<?php foreach ($articles as $article) { ?>
+						<a href="detail.php?id=<?php echo $article["id"] ?>" ">
+							<div class="productImage aritcle" id="<?php echo $article["id"] ?>">
+								<div class="id">
+									ID: <?php echo $article["id"]; ?>
+								</div>
+								<div class="title">
+									タイトル： <?php echo $article["title"]; ?>
+								</div>
+								<div class="content">
+									内容： <?php echo $article["content"]; ?>
+								</div>
+								<div class="youtube">
+									Youtube： <?php echo $article["youtube_url"]; ?>
+								</div>
+							</div>
+						</a> 
+						
+					<?php } ?>
 				</div>
 			</div>
 		</div>
-
-
-	
 	</div>
 
 	<div id="footer">

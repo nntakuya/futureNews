@@ -1,6 +1,6 @@
 <?php 
 session_start();
-require("../../model/article.php");
+require("../model/article.php");
 
 // 初期値
 $title = "";
@@ -66,8 +66,6 @@ function create(){
 	
 //記事全件取得
 function showAll(){
-	
-
 	//1.Articleモデルをインスタンス化
 	$article = new Model_Article ; //Articleモデルインスタンスを作成
 	$result = $article->find_all();
@@ -75,10 +73,19 @@ function showAll(){
 	return $result; 
 }
 
+function show($id){
+	$article = new Model_Article ; //Articleモデルインスタンスを作成
+	$result = $article->find_by($id);
+	error_log(print_r("test",true),"3","../../../../../logs/error_log");
+	error_log(print_r($result,true),"3","../../../../../logs/error_log");
+	return $result; 
+}
+
+
 
 function delete($id){
 	$article = new Model_Article ; //Articleモデルインスタンスを作成
-	error_log(print_r($id,true),"3","../../../../../logs/error_log");
+	// error_log(print_r($id,true),"3","../../../../../logs/error_log");
 	$article->delete($id);
 	
 

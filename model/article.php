@@ -1,7 +1,4 @@
 <?php 
-/**
- * 
- */
 
 class Model_Article 
 {
@@ -76,31 +73,23 @@ class Model_Article
 
 
 
-	//ログイン機能
-	// function find_by($email,$password){
-	// 	require("dbconnect.php");
+	// ログイン機能
+	function find_by($id){
+		require("dbconnect.php");
 
-	// 	$sql = 'SELECT * FROM `users` WHERE `email` = ? AND `password` = ?';
+		$sql = 'SELECT * FROM `articles` WHERE `id` = ?';
 
-	// 	// error_log(print_r("success",true),"3","../../../../../logs/error_log");//デバッグ
- //        // ?マークを代入する
- //        $data = array($email,$password);
- //        $stmt = $dbh->prepare($sql);
- //        $stmt->execute($data);
+        $data = [$id];
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute($data);
 
- //        // セレクト文を実行した結果を取得する。
- //        $record = $stmt->fetch(PDO::FETCH_ASSOC);
- //        // 全件取得させる場合はループさせて、配列に入れる
- //        // セレクトした内容の一番上(エクセルの表の一番上のみ)だけ取得して存在するかどうかチェックすれば、ログイン判定可能
+        // セレクト文を実行した結果を取得する。
+        $article = $stmt->fetch(PDO::FETCH_ASSOC);
+        
 
- //        if ($record) {
- //        	error_log(print_r($record,true),"3","../../../../../logs/error_log");//デバッグ
- //        	return $record;
- //        }else{
- //        	$errors['login'] = 'NG';//エラーの場合の対処を考える
- //        	return $errors;
- //        }
-	// }
+        error_log(print_r($article,true),"3","../../../../../logs/error_log");//デバッグ
+        return $article;
+	}
 
 
 

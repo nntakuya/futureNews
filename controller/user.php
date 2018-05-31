@@ -53,31 +53,38 @@ function createUser(){
 		$_SESSION["loginUser"] = $result;
 		header('Location: ../view/top.php');
 	}
-	//そのままtop.phpへリダイレクト
 }
 	
+
+
 //ユーザーのログイン
 function loginUser(){
+	$result = [
+		"login"=>"",
+	];
+
+
 	$user = new Model_User; //ユーザーモデルインスタンスを作成
 	$email = htmlspecialchars($_POST["email"]);
 	$password = htmlspecialchars($_POST["password"]);
 
-	$result = $user->find_by($email,$password);//email,passwordからログインユーザーを認証
+	$status = $user->find_by($email,$password);//email,passwordからログインユーザーを認証
 	// error_log(print_r($loginUser,true),"3","../../../../../logs/error_log");
 
 
-	//以下の処理は微妙
-	if ($result['login'] == 'NG') {
+	if ($status['error'] == 'notFind') {
 		//ログイン画面に、入力された値を保持したままリダイレクト
 		header('Location: ../view/index.php');
-		error_log(print_r($result['login'],true),"3","../../../../../logs/error_log");
-	}else{
-		//取得したユーザー情報をSessionに保存する
-		//TODO:余力があれば、トークンを発行して、別通信でもコンフリクトを起こさないようにする。
-		$_SESSION["loginUser"] = $result;
-		error_log(print_r("me",true),"3","../../../../../logs/error_log");
-		header('Location: ../view/top.php');
+		exit;
 	}
+	
+	//取得したユーザー情報をSessionに保存する
+	//TODO:余力があれば、トークンを発行して、別通信でもコンフリクトを起こさないようにする。
+	$_SESSION["loginUser"] = $status["loginUser"];
+	// error_log(print_r($_SESSION["loginUser"],true),"3","../../../../../logs/error_log");
+	header('Location: ../view/top.php');
+	exit;
+	
 }
 
 
