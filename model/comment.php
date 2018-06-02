@@ -2,19 +2,13 @@
 
 class Model_Comment 
 {
-	private $comments = "";
+	private $comments=[];
 
 	//コメント登録
-	//todo
-	//1.commentテーブルへのインサート文を作成
-	//2.article_comment中間テーブルへのインサート文を作成
-	//3.user_comment中間テーブルへのインサート文を作成
 	function create($comment,$articleID,$userID){
-		require("dbconnect.php");
+		require("dbconnect.php");//データベースへ接続
 
 		$inputComment = $this->setComment($comment);
-
-
 	
 		//TODO:ここのエラーの出し方は詰める
 		if (isset($errors)) {
@@ -52,57 +46,16 @@ class Model_Comment
 	}
 
 
-
-
-	//全コメント取得
-	//取得したいカラム：artcle_id,comment,user_iamge,user_name,created_at(comment)
-	//上記カラムを取得し、ソートを昇順にする（古いコメントが一番上にある状態にする）
-	//TODO
-	//必要なテーブル：commentsテーブル,articleテーブル,userテーブル,
-	// 				中間(article_comment)テーブル,中間(user_comment)テーブル
-	function find_all(){
-		require("dbconnect.php");
-		//初期化
-		$comments = [];
-
-		//SQLクエリを発行
-		$sql = 'SELECT * FROM `comments`';
-        $stmt = $dbh->prepare($sql);
-        $stmt->execute();
-        
-        //記事データを取得
-        while(true){
-			$record = $stmt->fetch(PDO::FETCH_ASSOC);
-			if(!$record){
-				break;
-			}
-			$comments[] = $record;
-		}
-		return $comments;
-	}
-
-	function delete($id){
-		//datebaseへ接続する
-		require("dbconnect.php");
-		//デリートクエリを実行
-		$sql = 'DELETE FROM `comments` WHERE `id`=?';
-		$data = [$id];
-		$stmt = $dbh->prepare($sql);
-		$stmt->execute($data);
-	}
-
-
-
-
-
-
-
-	
+	//コメント欄に表示するデータを取得
+	// User:name,image
+	// Article:id
+	// Comment:comment
 	function find_by($id){
-		require("dbconnect.php");
-		//初期化
-		$comments=[];
+		require("dbconnect.php");//データベースへ接続
+		
+		$comments=[];//初期化
 
+		// クエリを発行
 		$sql = 'SELECT
 					a.id as article_id,
 				   ComUser.comment as comment,
@@ -158,30 +111,28 @@ class Model_Comment
 		}
         
         
-
         error_log(print_r($comments,true),"3","../../../../../logs/error_log");//デバッグ
         return $comments;
 	}
 
 
-	//comment内容からcommentデータを取得
+	//Commentテーブルの最後の列のみ取得
 	function find_latest_comment(){
-		require("dbconnect.php");
+		require("dbconnect.php");//データベースへ接続
 
+		//クエリを発行
 		$sql = 'SELECT * FROM `comments` ORDER BY created_at DESC';
-
-        $data = [];
+ 
         $stmt = $dbh->prepare($sql);
-        $stmt->execute($data);
+        $stmt->execute();
 
-        // セレクト文を実行した結果を取得する。
         $comment = $stmt->fetch(PDO::FETCH_ASSOC);
         
-
         error_log(print_r($comment,true),"3","../../../../../logs/error_log");//デバッグ
         return $comment;
 	}
 
+	
 
 	//バリデーション
 

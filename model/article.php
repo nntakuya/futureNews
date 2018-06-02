@@ -57,19 +57,154 @@ class Model_Article
 		return $articles;
 	}
 
+
+
+
+
+
 	function delete($id){
-		//datebaseへ接続する
-		require("dbconnect.php");
-		//デリートクエリを実行
+		require("dbconnect.php");//datebaseへ接続する
+
+		//余力があれば、下記のやり方を試す
+		// $SQLqueries = [
+		// 	"delete" => 'DELETE FROM `articles` WHERE `id`=?',
+		// 	"delete" => 'DELETE FROM `article_comment` WHERE `article_id`=?',
+		// 	"select" => 'SELECT * FROM `article_comment` WHERE `article_id`= ?;',
+		// 	"delete" => 'DELETE FROM `user_comment` WHERE `comment_id`=?',
+		// 	"delete" => 'DELETE FROM `comments` WHERE `id`=?'
+		// ]
+
+		// foreach ($SQLqueries as $DeleteTarget => $SQLquery) 
+		// {
+		// 	if ($DeleteTarget == "delete") {
+		// 		$data = [$id];
+		// 		$stmt = $dbh->prepare($SQLquery);
+		// 		$stmt->execute($data);
+
+
+		// 	}elseif($DeleteTarget == "select"){
+
+
+		// 		$data = [$id];
+		//         $stmt = $dbh->prepare($SQLquery);
+		//         $stmt->execute($data);
+		        
+		//         while(true){
+		// 			$record = $stmt->fetch(PDO::FETCH_ASSOC);
+		// 			if(!$record){
+		// 				break;
+		// 			}
+		// 			$comments[] = $record;
+		// 		}
+
+
+		// 		//指定の記事に結びついているcommentテーブルとその中間テーブルの列をそれぞれ削除
+		// 		foreach ($comments as $comment) {
+
+		// 			//中間テーブルにあるcomment_idを削除
+		// 			$sql = 'DELETE FROM `user_comment` WHERE `comment_id`=?';
+		// 			$commentID = [$comment["comment_id"]];
+		// 			$stmt = $dbh->prepare($sql);
+		// 			$stmt->execute($commentID);
+
+		// 			//commentテーブルにあるcomment内容の列を削除
+		// 			$sql = 'DELETE FROM `comments` WHERE `id`=?';
+		// 			$stmt = $dbh->prepare($sql);
+		// 			$stmt->execute($commentID);
+		// 		}
+
+		// 	}
+
+		// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		//指定された記事を削除
+
+
 		$sql = 'DELETE FROM `articles` WHERE `id`=?';
-		$data = [$id];
+		$articleID = [$id];
 		$stmt = $dbh->prepare($sql);
-		$stmt->execute($data);
+		$stmt->execute($articleID);
+
+
+		// $sqlTwo = 'DELETE FROM `article_comment` WHERE `article_id`=?';
+		// $articleID = [$id];
+		// $stmt = $dbh->prepare($sqlTwo);
+		// $stmt->execute($articleID);
+		// error_log(print_r("=============",true),"3","../../../../../logs/error_log");//デバッグ
+		// error_log(print_r($res,true),"3","../../../../../logs/error_log");//デバッグ
+
+
+		// article_commentテーブル内の列を取得する前に、データを取得
+		$sql = 'SELECT * FROM `article_comment` WHERE `article_id`= ?;';
+ 		$articleID = [$id];
+        $stmt = $dbh->prepare($sql);
+        $stmt->execute($articleID);
+        
+        while(true){
+			$record = $stmt->fetch(PDO::FETCH_ASSOC);
+			if(!$record){
+				break;
+			}
+			$comments[] = $record;
+		}
+		error_log(print_r("|||||||||||||||||||||||||||||||",true),"3","../../../../../logs/error_log");//
+		error_log(print_r("comments",true),"3","../../../../../logs/error_log");//デバッグ
+		error_log(print_r($comments,true),"3","../../../../../logs/error_log");//デバッグ
+		error_log(print_r("|||||||||||||||||||||||||||||||",true),"3","../../../../../logs/error_log");//
+	
+		$sql = 'DELETE FROM `article_comment` WHERE `article_id`=?';	
+		$stmt = $dbh->prepare($sql);
+		$res = $stmt->execute($articleID);
+		// error_log(print_r("=============",true),"3","../../../../../logs/error_log");//デバッグ
+		// error_log(print_r("articleID",true),"3","../../../../../logs/error_log");//デバッグ
+		// error_log(print_r($articleID,true),"3","../../../../../logs/error_log");//デバッグ
+		// error_log(print_r("=============",true),"3","../../../../../logs/error_log");//デバッグ
+
+
+
+
+
+		// error_log(print_r("|||||||||||||||||||||||||||||||",true),"3","../../../../../logs/error_log");//デバッグ
+		
+
+
+		//指定の記事に結びついているcommentテーブルとその中間テーブルの列をそれぞれ削除
+		foreach ($comments as $comment) {
+			error_log(print_r($comment,true),"3","../../../../../logs/error_log");//デバッグ
+
+			//中間テーブルにあるcomment_idを削除
+			$sql = 'DELETE FROM `user_comment` WHERE `comment_id`=?';
+			$commentID = [$comment["comment_id"]];
+			$stmt = $dbh->prepare($sql);
+			$stmt->execute($commentID);
+			error_log(print_r($comment["comment_id"],true),"3","../../../../../logs/error_log");//デバッグ
+
+			//commentテーブルにあるcomment内容の列を削除
+			$sql = 'DELETE FROM `comments` WHERE `id`=?';
+			$stmt = $dbh->prepare($sql);
+			error_log(print_r($comment["comment_id"],true),"3","../../../../../logs/error_log");//デバッグ
+			$stmt->execute($commentID);
+		}
+
 	}
-
-
-
-
 
 
 

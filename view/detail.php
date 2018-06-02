@@ -4,11 +4,6 @@
 	require("../controller/comment.php");
 	$loginUser = $_SESSION["loginUser"];
 	$articleID = $_GET["id"];
-	error_log(print_r("============================================================================",true),"3","../../../../../logs/error_log");
-	error_log(print_r($loginUser,true),"3","../../../../../logs/error_log");
-	error_log(print_r("============================================================================",true),"3","../../../../../logs/error_log");
-
-
  ?>
 
 <!DOCTYPE html>
@@ -23,28 +18,11 @@
 	<div class="header">
 		<p id="headTitle">Future News</p>
 		<ul id="nav-link">
-			<!-- <li class="link" id="aboutMe">About Me</li> -->
 			<li class="link" id="rec">ログアウト</li>
 		</ul>
-		<!-- <div class="link" id="aboutMe">About Me</div>
-		<div class="link" id="rec">Recommendation</div> -->
 
 
 	</div>
-	
-
-	<!-- TODO -->
-	<!-- 1.サイドバー(左)作成
-		1.ログインユーザー画像
-		2.ログインユーザー
-		3.textarea(投稿に対するコメントの内容)
-		4.コメント登録ボタン
-	2.サイドバー(右)作成：投稿に対する全ユーザーコメント欄
-		1.ユーザー名
-		2.コメント内容
-	3.投稿の詳細欄
-		1.youtubeの埋め込み動画
-		2.記事の内容 -->
 
 
 	<div class="contents">
