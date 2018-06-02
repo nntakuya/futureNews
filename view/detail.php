@@ -1,6 +1,7 @@
 <?php 
 	// session_start();
 	require("../controller/article.php");
+	require("../controller/comment.php");
 	$loginUser = $_SESSION["loginUser"];
 	$articleID = $_GET["id"];
 	error_log(print_r("============================================================================",true),"3","../../../../../logs/error_log");
@@ -94,17 +95,18 @@
 				<?php echo $article["content"]; ?>
 			</div>
 			
-
-
-
-
-
-
 		</div>
 		
 		<!-- サイドバー（右）：コメント一覧 -->
 		<div id="commentList">
-			
+			<?php $comments = showComment($articleID); ?>
+			<?php foreach ($comments as $comment) { ?>
+				<?php echo $comment["user_image"]; ?>
+				<?php echo $comment["user_name"]; ?>
+				<?php echo $comment["comment"]; ?>
+				=====================================
+			<?php } ?>
+
 		</div>
 
 	

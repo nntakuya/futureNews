@@ -1,5 +1,5 @@
 <?php 
-session_start();
+// session_start();
 require("../model/comment.php");
 
 // 初期値
@@ -23,20 +23,21 @@ if (!empty($_POST)) {
 	//コメントの投稿
 	if ($_POST["manage"] == "postCom") 
 	{
-		create();
+		createComment();
 
-	}elseif ($_POST["manage"] == "delete") 
-	{
-		error_log(print_r($_POST,true),"3","../../../../../logs/error_log");
-		delete($_POST["articleId"]);
 	}
+	// elseif ($_POST["manage"] == "delete") 
+	// {
+	// 	error_log(print_r($_POST,true),"3","../../../../../logs/error_log");
+	// 	delete($_POST["articleId"]);
+	// }
 }
 
 
 
 
 //記事の投稿
-function create(){
+function createComment(){
 	$comment = new Model_Comment ;
 	$content = htmlspecialchars($_POST["comment"]);
 	$articleID = htmlspecialchars($_POST["articleID"]);
@@ -64,15 +65,16 @@ function create(){
 }
 	
 //記事全件取得
-function showAll(){
-	//1.Articleモデルをインスタンス化
-	$comment = new Model_Comment ; //commentモデルインスタンスを作成
-	$result = $comment->find_all();
+// function showCommentAll(){
+// 	//1.Articleモデルをインスタンス化
+// 	$comment = new Model_Comment ; //commentモデルインスタンスを作成
+// 	$result = $comment->find_all();
 
-	return $result; 
-}
+// 	return $result; 
+// }
 
-function show($id){
+//選択された記事に対するコメントを全件取得
+function showComment($id){
 	$comment = new Model_Comment ; //commentモデルインスタンスを作成
 	$result = $comment->find_by($id);
 	error_log(print_r("test",true),"3","../../../../../logs/error_log");
@@ -82,7 +84,7 @@ function show($id){
 
 
 
-function delete($id){
+function deleteComment($id){
 	$comment = new Model_Comment ; //commentモデルインスタンスを作成
 	// error_log(print_r($id,true),"3","../../../../../logs/error_log");
 	$comment->delete($id);
