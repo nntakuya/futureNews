@@ -1,5 +1,4 @@
 <?php 
-	// session_start();
 	require("../controller/article.php");
 	require("../controller/comment.php");
 	$loginUser = $_SESSION["loginUser"];
@@ -65,12 +64,12 @@
 			
 			<!-- 動画リンク -->
 			<div id="youtube">
-				<?php echo $article["youtube_url"]; ?>
+				<iframe width="560" height="315" src="https://www.youtube.com/embed/<?php echo $article["youtube_url"]; ?>" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 			</div>
 
 			<!-- 記事内容 -->
 			<div id="artCon">
-				<?php echo $article["content"]; ?>
+				<?php // echo $article["content"]; ?>
 			</div>
 			
 		</div>

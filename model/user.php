@@ -1,5 +1,4 @@
 <?php 
-// error_log(print_r("model",true),"3","../../../../../logs/error_log");//デバッグ
 
 class Model_User 
 {
@@ -35,7 +34,6 @@ class Model_User
 		if (isset($errors)) {
 			return $errors;
 		}
-
 		$sql = 'INSERT INTO `users` SET `name`=?,
 										  `email`=?, 
 								          `password`=?, 
@@ -99,6 +97,10 @@ class Model_User
 	// ==========================
 	function setName($name){
 
+		//空文字
+		//文字数チェック
+
+
 		return $name;
 	}
 
@@ -110,6 +112,7 @@ class Model_User
 	//　　　　 メールアドレス
 	// ==========================
 	function setEmail($email){
+
 		return $email;
 	}
 
@@ -154,6 +157,50 @@ class Model_User
 	function getOwner(){
 
 	}
+
+
+
+
+	// ==========================
+	//　　　　 バリデーション
+	// ==========================
+	function validation($data) {
+
+	$error = array();
+
+	// 氏名のバリデーション
+	if( empty($data['your_name']) ) {
+		$error[] = "「氏名」は必ず入力してください。";
+	}
+
+	// メールアドレスのバリデーション
+	if( empty($data['email']) ) {
+		$error[] = "「メールアドレス」は必ず入力してください。";
+	}
+
+	// 性別のバリデーション
+	if( empty($data['gender']) ) {
+		$error[] = "「性別」は必ず入力してください。";
+	}
+
+	// 年齢のバリデーション
+	if( empty($data['age']) ) {
+		$error[] = "「年齢」は必ず入力してください。";
+	}
+
+	// お問い合わせ内容のバリデーション
+	if( empty($data['contact']) ) {
+		$error[] = "「お問い合わせ内容」は必ず入力してください。";
+	}
+
+	// プライバシーポリシー同意のバリデーション
+	if( empty($data['agreement']) ) {
+		$error[] = "プライバシーポリシーをご確認ください。";
+	}
+
+	return $error;
+}
+
 
 
 }

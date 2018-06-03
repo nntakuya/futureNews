@@ -14,8 +14,8 @@ class Model_Article
 		require("dbconnect.php");
 
 		$inputTitle = $this->setTitle($title);
-		$inputContent =$this->setContent($content);
-		$inputYoutubeLink =$this->setYoutubeLink($youtubeLink);
+		$inputContent = $this->setContent($content);
+		$inputYoutubeLink = $this->setYoutubeLink($youtubeLink);
 
 		//TODO:ここのエラーの出し方は詰める
 		if (isset($errors)) {
@@ -144,12 +144,6 @@ class Model_Article
 		$stmt->execute($articleID);
 
 
-		// $sqlTwo = 'DELETE FROM `article_comment` WHERE `article_id`=?';
-		// $articleID = [$id];
-		// $stmt = $dbh->prepare($sqlTwo);
-		// $stmt->execute($articleID);
-		// error_log(print_r("=============",true),"3","../../../../../logs/error_log");//デバッグ
-		// error_log(print_r($res,true),"3","../../../../../logs/error_log");//デバッグ
 
 
 		// article_commentテーブル内の列を取得する前に、データを取得
@@ -165,26 +159,12 @@ class Model_Article
 			}
 			$comments[] = $record;
 		}
-		error_log(print_r("|||||||||||||||||||||||||||||||",true),"3","../../../../../logs/error_log");//
-		error_log(print_r("comments",true),"3","../../../../../logs/error_log");//デバッグ
-		error_log(print_r($comments,true),"3","../../../../../logs/error_log");//デバッグ
-		error_log(print_r("|||||||||||||||||||||||||||||||",true),"3","../../../../../logs/error_log");//
 	
 		$sql = 'DELETE FROM `article_comment` WHERE `article_id`=?';	
 		$stmt = $dbh->prepare($sql);
 		$res = $stmt->execute($articleID);
-		// error_log(print_r("=============",true),"3","../../../../../logs/error_log");//デバッグ
-		// error_log(print_r("articleID",true),"3","../../../../../logs/error_log");//デバッグ
-		// error_log(print_r($articleID,true),"3","../../../../../logs/error_log");//デバッグ
-		// error_log(print_r("=============",true),"3","../../../../../logs/error_log");//デバッグ
-
-
-
-
-
-		// error_log(print_r("|||||||||||||||||||||||||||||||",true),"3","../../../../../logs/error_log");//デバッグ
 		
-
+	
 
 		//指定の記事に結びついているcommentテーブルとその中間テーブルの列をそれぞれ削除
 		foreach ($comments as $comment) {
@@ -228,6 +208,19 @@ class Model_Article
 
 
 
+	function embTag($src){
+		$emb1 = strstr($src, "v=");
+		$ampersand = strpos($emb1, "&") ;
+		if($ampersand){
+			$emb2 = mb_substr($emb1, 0, $ampersand);
+		}else{
+			$emb2 = $emb1;
+		}
+		$emb = mb_substr($emb2, 2);
+	return $emb;
+	}
+
+
 	//バリデーション
 
 	// ==========================
@@ -258,7 +251,10 @@ class Model_Article
 	//　　　　 Youtubeリンク
 	// ==========================
 	function setYoutubeLink($youtubeLink){
-		return $youtubeLink;
+
+		$embURL = $this->embTag($youtubeLink); //youtubeの埋め込みリンクを生成
+
+		return $embURL;
 	}
 
 	function getYoutubeLink(){

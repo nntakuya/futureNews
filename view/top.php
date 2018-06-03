@@ -34,17 +34,12 @@
 					<?php foreach ($articles as $article) { ?>
 						<a href="detail.php?id=<?php echo $article["id"] ?>" ">
 							<div class="productImage aritcle" id="<?php echo $article["id"] ?>">
-								<div class="id">
-									ID: <?php echo $article["id"]; ?>
-								</div>
 								<div class="title">
 									タイトル： <?php echo $article["title"]; ?>
 								</div>
-								<div class="content">
-									内容： <?php echo $article["content"]; ?>
-								</div>
 								<div class="youtube">
-									Youtube： <?php echo $article["youtube_url"]; ?>
+									<!-- Youtube： <?php echo $article["youtube_url"]; ?> -->
+									<img  src="http://i.ytimg.com/vi/<?php echo $article["youtube_url"]; ?>/1.jpg" alt="">
 								</div>
 							</div>
 						</a> 
