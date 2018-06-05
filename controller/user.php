@@ -23,6 +23,7 @@ if (isset($_POST)) {
 	}elseif ($_POST["SignUpOrSignIn"] == "SignUp") 
 	{
 		error_log(print_r("SignUp",true),"3","../../../../../logs/error_log");
+		// error_log(print_r($_FILES,true),"3","../../../../../logs/error_log");
 		createUser();
 	}
 }
@@ -50,7 +51,7 @@ function createUser(){
 		//フォームの初期値を入力状態へ
 		header('Location: ../view/new.php');
 	}else{
-		$_SESSION["loginUser"] = $result;
+		$_SESSION["loginUser"] = $result["loginUser"];
 		header('Location: ../view/top.php');
 	}
 }
@@ -81,7 +82,8 @@ function loginUser(){
 	//取得したユーザー情報をSessionに保存する
 	//TODO:余力があれば、トークンを発行して、別通信でもコンフリクトを起こさないようにする。
 	$_SESSION["loginUser"] = $status["loginUser"];
-	// error_log(print_r($_SESSION["loginUser"],true),"3","../../../../../logs/error_log");
+	error_log(print_r("loginuser-------",true),"3","../../../../../logs/error_log");
+	error_log(print_r($_SESSION["loginUser"],true),"3","../../../../../logs/error_log");
 	header('Location: ../view/top.php');
 	exit;
 	

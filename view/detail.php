@@ -1,96 +1,85 @@
 <?php 
-	require("../controller/article.php");
-	require("../controller/comment.php");
+	require("../controller/article.php");//cotroller_articleの読込
+	require("../controller/comment.php");//cotroller_commentの読込
 	$loginUser = $_SESSION["loginUser"];
 	$articleID = $_GET["id"];
+	
+	require("parts/header.php");//ヘッダーの読込
  ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Takuya's site</title>
-	<link rel="stylesheet" type="text/css" href="../assets/Custom.css">
-	<script type="text/javascript" src="../assets/js/footerFixed.js"></script>
-	<link rel="stylesheet" type="text/css" href="../assets/Custom.css">
-</head>
-<body>
-	<div class="header">
-		<p id="headTitle">Future News</p>
-		<ul id="nav-link">
-			<li class="link" id="rec">ログアウト</li>
-		</ul>
 
 
-	</div>
 
-
-	<div class="contents">
-		<!-- サイドバー（左）：ログインアカウント -->
-
-		<div id="UserDetail">
-			<!-- ユーザー情報 -->
-			<div class="userInfo">
-				<div id="userImg">
-					<?php echo $loginUser["image"]; ?>
-				</div>
-				<div id="userName">
-					<?php echo $loginUser["name"]; ?>
-				</div>
+<div class="contents">
+	<!-- サイドバー（左）：ログインアカウント -->
+	<div id="UserDetail">
+		<!-- ユーザー情報 -->
+		<div class="userInfo">
+			<div id="userImg">
+				<img style="width:100px;" src="../assets/user_image/<?php echo $loginUser["image"];?>">
 			</div>
-
-			<!-- コメント投稿フォーム -->
-			<div id="comForm">
-				<form action="../controller/comment.php" method="post">
-					<textarea name="comment"></textarea>
-					<input type="hidden" name="manage" value="postCom">
-
-					<input type="hidden" name="userID" value="<?php echo $loginUser["id"]; ?>">
-					<input type="hidden" name="articleID" value="<?php echo $articleID; ?>">
-
-					<input type="submit" value="コメント">
-				</form>
+			<div id="userName">
+				<?php echo $loginUser["name"]; ?>
 			</div>
 		</div>
 
-		<!-- 投稿詳細画面	 -->
-		<div id="detailArticle">
-			<!-- 記事詳細データを取得	 -->
-			<?php $article = show($articleID); ?>
-			
-			<!-- タイトル -->
-			<div id="title">
-				<?php echo $article["title"]; ?>
-			</div>
-			
-			<!-- 動画リンク -->
-			<div id="youtube">
-				<iframe width="560" height="315" src="https://www.youtube.com/embed/<?php echo $article["youtube_url"]; ?>" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-			</div>
+		<!-- コメント投稿フォーム -->
+		<div id="comForm">
+			<form action="../controller/comment.php" method="post">
+				<textarea name="comment"></textarea>
+				<input type="hidden" name="manage" value="postCom">
 
-			<!-- 記事内容 -->
-			<div id="artCon">
-				<?php // echo $article["content"]; ?>
-			</div>
-			
+				<input type="hidden" name="userID" value="<?php echo $loginUser["id"]; ?>">
+				<input type="hidden" name="articleID" value="<?php echo $articleID; ?>">
+
+				<input type="submit" value="コメント">
+			</form>
+		</div>
+	</div>
+
+	<!-- 投稿詳細画面	 -->
+	<div id="detailArticle">
+		<!-- 記事詳細データを取得	 -->
+		<?php $article = show($articleID); ?>
+		
+		<!-- タイトル -->
+		<div id="title">
+			<?php echo $article["title"]; ?>
 		</div>
 		
-		<!-- サイドバー（右）：コメント一覧 -->
-		<div id="commentList">
-			<?php $comments = showComment($articleID); ?>
-			<?php foreach ($comments as $comment) { ?>
-				<?php echo $comment["user_image"]; ?>
-				<?php echo $comment["user_name"]; ?>
-				<?php echo $comment["comment"]; ?>
-				=====================================
-			<?php } ?>
-
+		<!-- 動画リンク -->
+		<div id="youtube">
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/<?php echo $article["youtube_url"]; ?>" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 		</div>
 
+		<!-- 記事内容 -->
+		<div id="artCon">
+			<?php echo $article["content"]; ?>
+		</div>
+		
+	</div>
 	
-	</div>
+	<!-- サイドバー（右）：コメント一覧 -->
+	<div id="commentList">
+		<?php $comments = showComment($articleID); ?>
+		<?php foreach ($comments as $comment) { ?>
+			<img style="width:100px;" src="../assets/user_image/<?php echo $comment["user_image"]; ?>">
+			<br>
+			<?php echo $comment["user_name"]; ?>
+			<br>
+			<?php echo $comment["comment"]; ?>
+			=====================================
+		<?php } ?>
 
-	<div id="footer">
-		<div id="copyright">Copyright (c) Takuya Nakamatsu </div>
 	</div>
-</body>
-</html>
+</div>
+
+
+
+
+
+
+
+
+<!-- フッターの読込	 -->
+<?php require("parts/footer.php"); ?>	

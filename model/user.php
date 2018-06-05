@@ -19,14 +19,11 @@ class Model_User
 	function create($name,$email,$password,$image,$owner){
 		require("dbconnect.php");
 
-		//todo
-		//以下のメソッドを作る
-
 		$inputName = $this->setName($name);
-		$inputEmail =$this->setEmail($email);
-		$inputPassword =$this->setPassword($password);
-		$inputImagePath =$this->setImagePath($image);
-		$inputOwener =$this->setOwner($owner);
+		$inputEmail = $this->setEmail($email);
+		$inputPassword = $this->setPassword($password);
+		$inputImagePath = $this->setImagePath($image);
+		$inputOwener = $this->setOwner($owner);
 
 
 		//各項目において、エラーがない場合、データベースに反映させる
@@ -52,7 +49,6 @@ class Model_User
 		$result =  $this->find_by($inputEmail,$inputPassword);//インサート後にログイン処理
 
 		return $result;
-
 	}
 
 
@@ -138,7 +134,73 @@ class Model_User
 	// ==========================
 	function setImagePath($image){
 		//画像の拡張子のバリデーションをセットする
-		return $image;
+		// ファイル名を取得する（アップロードされなければ空）
+
+        $fileName = $_FILES['image']['name']; 
+        error_log(print_r("FILES",true),"3","../../../../../logs/error_log");//デバッグ
+        error_log(print_r($_FILES,true),"3","../../../../../logs/error_log");//デバッグ
+        
+
+        if(!empty($fileName))
+        {
+                $ext = substr($fileName,-3); 
+
+                $ext = strtolower($ext); 
+                if ($ext != "jpg" && $ext != "png" && $ext != "gif") { 
+                    $errors["image"] = "extention"; 
+                }
+
+        }
+        
+		move_uploaded_file($_FILES["image"]["tmp_name"],'../assets/user_image/'.$fileName);
+
+		return $fileName;
+
+
+            // // ファイル名を取得する（アップロードされなければ空）
+            // $fileName = $_FILES['image']['name']; 
+            // // フラグを立てる
+            // $f_flag=false;
+            // if(empty($fileName) && !empty($_SESSION["login_user"]['image'])){
+            //     $f_flag=true;
+            // }
+
+            // //アップロードされた、または過去にアップロードしてたら
+            // if(!empty($fileName) || $f_flag==true ){
+            //     // アップロードしてたらファイルの拡張子チェック
+
+            //     if(!empty($fileName)){
+            //         $ext = substr($fileName,-3); 
+    
+            //         $ext = strtolower($ext); 
+            //         if ($ext != "jpg" && $ext != "png" && $ext != "gif") { 
+            //             $errors["image"] = "extention"; 
+            //         }
+            //           // else{
+            //           //   $errors['image'] = "blank";
+            //           // }
+            //     }else{
+            //       //アップロードしてなかったら、現在の画像を選択
+            //       $fileName=$_SESSION["login_user"]['image'];
+            //     }
+            //    // エラーが空の時
+            //    if (empty($errors['image'])) {
+             
+
+            //    // 画像を保存する
+            //       if(!empty($fileName)){
+            //         // echo$fileName;
+            //         move_uploaded_file($_FILES["image"]["tmp_name"],'../image/'.$fileName); 
+            //            error_log(print_r('$fileName',true),"3","../../../../../logs/error_log");
+                  
+            //       }
+                
+            //       // イメージのフォルダの中にファイルを保存する
+            //   }
+
+
+
+		
 	}
 
 	function getImagePath(){

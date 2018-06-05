@@ -5,7 +5,7 @@
 	<title>ログイン</title>
 </head>
 <body>
-	<form action="../controller/user.php" method="post">
+	<form action="../controller/user.php" method="post" enctype="multipart/form-data">
 		<!-- ユーザー名 入力欄	-->
 		<div class="inputForm">  
 			ユーザー名：
@@ -25,7 +25,7 @@
 
 		<div class="inputForm">  
 			画像：		
-			<input id="imgFile" type="file" name="image">
+			<input id="imgFile" type="file" name="image" accept="image/*">
 		</div>				
 
 		<!-- 余力があれば、パスワード確認欄を作成 -->

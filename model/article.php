@@ -120,21 +120,6 @@ class Model_Article
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		//指定された記事を削除
 
 
@@ -175,7 +160,7 @@ class Model_Article
 			$commentID = [$comment["comment_id"]];
 			$stmt = $dbh->prepare($sql);
 			$stmt->execute($commentID);
-			error_log(print_r($comment["comment_id"],true),"3","../../../../../logs/error_log");//デバッグ
+			// error_log(print_r($comment["comment_id"],true),"3","../../../../../logs/error_log");//デバッグ
 
 			//commentテーブルにあるcomment内容の列を削除
 			$sql = 'DELETE FROM `comments` WHERE `id`=?';
@@ -202,22 +187,34 @@ class Model_Article
         $article = $stmt->fetch(PDO::FETCH_ASSOC);
         
 
-        error_log(print_r($article,true),"3","../../../../../logs/error_log");//デバッグ
+        // error_log(print_r($article,true),"3","../../../../../logs/error_log");//デバッグ
         return $article;
 	}
 
 
 
 	function embTag($src){
+		error_log(print_r("src:".$src,true),"3","../../../../../logs/error_log");//デバッグ
+
 		$emb1 = strstr($src, "v=");
-		$ampersand = strpos($emb1, "&") ;
+		error_log(print_r("emb1:".$emb1,true),"3","../../../../../logs/error_log");//デバッグ
+
+		$ampersand = strpos($emb1, "&");
+		error_log(print_r("ampersand:".$ampersand,true),"3","../../../../../logs/error_log");//デバッグ
+
 		if($ampersand){
 			$emb2 = mb_substr($emb1, 0, $ampersand);
 		}else{
 			$emb2 = $emb1;
 		}
+
+		error_log(print_r("emb2:".$emb2,true),"3","../../../../../logs/error_log");//デバッグ
+
 		$emb = mb_substr($emb2, 2);
-	return $emb;
+
+		error_log(print_r("emb:".$emb,true),"3","../../../../../logs/error_log");//デバッグ
+
+		return $emb;
 	}
 
 
@@ -253,6 +250,8 @@ class Model_Article
 	function setYoutubeLink($youtubeLink){
 
 		$embURL = $this->embTag($youtubeLink); //youtubeの埋め込みリンクを生成
+
+		error_log(print_r("embURL:".$embURL,true),"3","../../../../../logs/error_log");//デバッグ
 
 		return $embURL;
 	}
