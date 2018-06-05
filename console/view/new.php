@@ -9,7 +9,6 @@
 </head>
 <body>
 	<form action="../controller/user.php" method="post" enctype="multipart/form-data">
-		<!-- <form method="post" enctype="multipart/form-data"> -->
 		<!-- ユーザー名 入力欄	-->
 		<div class="inputForm">  
 			ユーザー名：

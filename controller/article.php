@@ -45,20 +45,6 @@ function create(){
 
 	$result = $article->create($title,$content,$youtubeLink);
 
-	//(課題）errorの数が0じゃない場合にするか？
-	//TODO:下記のErrorの場合の処理は、詰める
-	// if ($result == "error") {
-	// 	//new.phpへリダイレクト
-	// 	//フォームの初期値を入力状態へ
-	// 	$_SESSION["result"] = "投稿できませんでした。";
-	// 	header('Location: ../view/management.php');
-	// 	exit;
-	// }else{
-	// 	//TODO:投稿完了のお知らせをsessionでする
-	// 	$_SESSION["result"] = "投稿しました。";
-	// 	header('Location: ../view/management.php');
-	// 	exit;
-	// }
 	//そのままtop.phpへリダイレクト
 	header('Location: ../view/management.php');
 	exit;

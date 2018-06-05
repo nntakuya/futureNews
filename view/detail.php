@@ -1,10 +1,16 @@
 <?php 
 	require("../controller/article.php");//cotroller_articleの読込
 	require("../controller/comment.php");//cotroller_commentの読込
+	require("parts/header.php");//ヘッダーの読込 & セッションが切れた場合,index.phpへリダイレクト
+	
+	//記事IDが選択されていない場合,top.phpへリダイレクト
+	if (empty($_GET["id"])) {
+		header('Location: top.php');
+		exit;
+	}
+
 	$loginUser = $_SESSION["loginUser"];
 	$articleID = $_GET["id"];
-	
-	require("parts/header.php");//ヘッダーの読込
  ?>
 
 
@@ -53,7 +59,7 @@
 		</div>
 
 		<!-- 記事内容 -->
-		<div id="artCon">
+		<div style="width:560px;" id="artCon">
 			<?php echo $article["content"]; ?>
 		</div>
 		

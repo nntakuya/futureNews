@@ -63,7 +63,7 @@ class Model_Article
 
 
 	function delete($id){
-		require("dbconnect.php");//datebaseへ接続する
+		require("dbconnect.php");//datebaseへ接続
 
 		//余力があれば、下記のやり方を試す
 		// $SQLqueries = [
@@ -175,7 +175,7 @@ class Model_Article
 
 	// ログイン機能
 	function find_by($id){
-		require("dbconnect.php");
+		require("dbconnect.php");//datebaseへ接続
 
 		$sql = 'SELECT * FROM `articles` WHERE `id` = ?';
 
@@ -193,24 +193,21 @@ class Model_Article
 
 
 
+	//youtubeの埋め込みコード取得
 	function embTag($src){
-		error_log(print_r("src:".$src,true),"3","../../../../../logs/error_log");//デバッグ
+		$emb1 = strstr($src, "v=");//youtubeのurl「v=」以降を取得
 
-		$emb1 = strstr($src, "v=");
-		error_log(print_r("emb1:".$emb1,true),"3","../../../../../logs/error_log");//デバッグ
-
-		$ampersand = strpos($emb1, "&");
-		error_log(print_r("ampersand:".$ampersand,true),"3","../../../../../logs/error_log");//デバッグ
+		$ampersand = strpos($emb1, "&");//$emb1の中に"&"の存在チェック
 
 		if($ampersand){
+			//"&"が存在する場合は、それ以降の文字列を除く
 			$emb2 = mb_substr($emb1, 0, $ampersand);
 		}else{
+			//"&"が存在しない場合は、"v="以降の文字列をそのまま使用
 			$emb2 = $emb1;
 		}
 
-		error_log(print_r("emb2:".$emb2,true),"3","../../../../../logs/error_log");//デバッグ
-
-		$emb = mb_substr($emb2, 2);
+		$emb = mb_substr($emb2, 2);//"v="の文字列を削除
 
 		error_log(print_r("emb:".$emb,true),"3","../../../../../logs/error_log");//デバッグ
 
@@ -249,9 +246,7 @@ class Model_Article
 	// ==========================
 	function setYoutubeLink($youtubeLink){
 
-		$embURL = $this->embTag($youtubeLink); //youtubeの埋め込みリンクを生成
-
-		error_log(print_r("embURL:".$embURL,true),"3","../../../../../logs/error_log");//デバッグ
+		$embURL = $this->embTag($youtubeLink); //youtubeの埋め込みコード取得
 
 		return $embURL;
 	}

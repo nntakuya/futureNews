@@ -16,13 +16,13 @@ class Model_User
 	//ユーザー登録
 	//エラーが出た場合、その都度、セッターのファンクションで、$error配列にエラー項目を追加していく
 	//TODO:アカウント作成時、既に存在するアカウントの場合をエラーにする
-	function create($name,$email,$password,$image,$owner){
+	function create($name,$email,$password,$owner){
 		require("dbconnect.php");
 
 		$inputName = $this->setName($name);
 		$inputEmail = $this->setEmail($email);
 		$inputPassword = $this->setPassword($password);
-		$inputImagePath = $this->setImagePath($image);
+		$inputImagePath = $this->setImagePath();
 		$inputOwener = $this->setOwner($owner);
 
 
@@ -79,9 +79,12 @@ class Model_User
         	$status["error"] = 'notFind';
         }
 
-        // error_log(print_r($status,true),"3","../../../../../logs/error_log");//デバッグ
+
+        error_log(print_r("status",true),"3","../../../../../logs/error_log");//デバッグ
+        error_log(print_r($status,true),"3","../../../../../logs/error_log");//デバッグ
 
         return $status;
+
 	}
 
 
@@ -132,7 +135,7 @@ class Model_User
 	// ==========================
 	//　　　　 	画像
 	// ==========================
-	function setImagePath($image){
+	function setImagePath(){
 		//画像の拡張子のバリデーションをセットする
 		// ファイル名を取得する（アップロードされなければ空）
 

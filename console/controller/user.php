@@ -4,9 +4,8 @@ require("../../model/user.php");
 
 // 初期値のセット
 $name = "";
-$email = 
+$email = "";
 $password = "";
-$image = "sampleImage";
 $owner = 0;
 
 
@@ -30,16 +29,17 @@ if (isset($_POST)) {
 
 
 
-//ユーザーの新規登録
+// =========================
+	// ユーザー新規登録
+// =========================
 function createUser(){
 	$user = new Model_User;
 	$name = htmlspecialchars($_POST["name"]);
 	$email = htmlspecialchars($_POST["email"]);
 	$password = htmlspecialchars($_POST["password"]);
-	$image = htmlspecialchars($_POST["image"]);
 	$owner = htmlspecialchars($_POST["owner"]);
 
-	$result = $user->create($name,$email,$password,$image,$owner);
+	$result = $user->create($name,$email,$password,$owner);
 
 
 	error_log(print_r($result,true),"3","../../../../../logs/error_log");
@@ -53,17 +53,31 @@ function createUser(){
 		$_SESSION["loginUser"] = $result;
 		header('Location: ../view/management.php');
 	}
-	//そのままtop.phpへリダイレクト
 }
 	
-//ユーザーのログイン
+
+
+
+
+// =========================
+	// ユーザーログイン
+// =========================
 function loginUser(){
 	$user = new Model_User; //ユーザーモデルインスタンスを作成
+
+	//フォームの値をそれぞれセット
 	$email = htmlspecialchars($_POST["email"]);
 	$password = htmlspecialchars($_POST["password"]);
 
+
+	error_log(print_r("¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥¥",true),"3","../../../../../logs/error_log");
 	$result = $user->find_by($email,$password);//email,passwordからログインユーザーを認証
-	error_log(print_r($result["owner"],true),"3","../../../../../logs/error_log");
+
+	error_log(print_r(is_array($result),true),"3","../../../../../logs/error_log");
+	error_log(print_r("conLoginUser===".$testSample,true),"3","../../../../../logs/error_log");
+
+
+
 	//以下の処理は微妙
 	//『データベースにユーザーデータが存在しない』OR『 オーナー権がない』場合はlogin.phpへリダイレクト
 	if ($result['login'] == 'NG' || $result["owner"] != 1) {
@@ -72,12 +86,11 @@ function loginUser(){
 		error_log(print_r("testFail",true),"3","../../../../../logs/error_log");
 		exit;
 	}
-		//取得したユーザー情報をSessionに保存する
-		//TODO:余力があれば、トークンを発行して、別通信でもコンフリクトを起こさないようにする。
-		$_SESSION["loginUser"] = $result;
-		// error_log(print_r("testSuccess",true),"3","../../../../../logs/error_log");
-		header('Location: ../view/management.php');
-		exit;
+
+	//取得したユーザー情報をSessionに保存する
+	$_SESSION["loginUser"] = $result;
+	header('Location: ../view/management.php');
+	exit;
 }
 
 

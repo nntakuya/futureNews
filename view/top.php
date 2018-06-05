@@ -1,6 +1,6 @@
 <?php 
 	require("../controller/article.php"); 
-	require("parts/header.php");//ヘッダーの読み込み
+	require("parts/header.php");//ヘッダーの読込 & セッションが切れた場合,index.phpへリダイレクト
 ?>
 
 <div class="contnets">

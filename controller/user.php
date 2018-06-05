@@ -4,9 +4,8 @@ require("../model/user.php");
 
 // 初期値のセット
 $name = "";
-$email = 
+$email = "";
 $password = "";
-$image = "sampleImage";
 $owner = 0;
 
 
@@ -37,10 +36,9 @@ function createUser(){
 	$name = htmlspecialchars($_POST["name"]);
 	$email = htmlspecialchars($_POST["email"]);
 	$password = htmlspecialchars($_POST["password"]);
-	$image = htmlspecialchars($_POST["image"]);
 	$owner = htmlspecialchars($_POST["owner"]);
 
-	$result = $user->create($name,$email,$password,$image,$owner);
+	$result = $user->create($name,$email,$password,$owner);
 
 
 	error_log(print_r($result,true),"3","../../../../../logs/error_log");

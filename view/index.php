@@ -1,3 +1,18 @@
+<?php
+session_start();//セッションススタート
+// セッション変数を解除
+$_SESSION = array();
+
+// セッションcookieを削除
+if (isset($_COOKIE[session_name()])) {
+    setcookie(session_name(), '', time()-42000, '/');
+}
+
+// セッションを破棄
+session_destroy();
+
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
